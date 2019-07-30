@@ -30,7 +30,19 @@ server.get('/users', (req, res) => {
 		.catch((error) => {
 			res.status(500).json({ error: 'The users information could not be retrieved.' });
 		});
-})
+});
+
+server.get('/users/:id', (req, res) => {
+	const id = req.params.id;
+	db
+		.findById(id)
+		.then((user) => {
+			res.status(200).json(user);
+		})
+		.catch((error) => {
+			res.status(500).json({ message: 'Specified User ID does not exist.' });
+		});
+});
 
 server.listen(3333, () => {
     console.log('Listening on 3333');
